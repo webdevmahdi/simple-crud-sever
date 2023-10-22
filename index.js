@@ -36,6 +36,14 @@ async function run() {
       res.send(result);
     })
 
+    app.get('/users/:id', async (req, res) => {
+      let id = req.params.id;
+      let query = { _id: new ObjectId(id)}
+      let result = await userData.findOne(query);
+      res.send(result)
+    })
+    
+
     app.post('/users', async (req, res) => {
       let user = req.body;
       console.log(req.body);
