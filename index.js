@@ -42,7 +42,22 @@ async function run() {
       let result = await userData.findOne(query);
       res.send(result)
     })
-    
+
+    app.put('/users/:id', async (req, res) => {
+      let id = req.params.id;
+      let updatedData = req.body;
+      console.log(updatedData)
+      let filter = { _id: new ObjectId(id)}
+      let options = { upsert: true }
+      let updatedUser = {
+        $set: {
+          name: updatedData.name,
+          email: updatedData.email
+        }
+      }
+      let result = await userData.updateOne(filter, updatedUser, options)
+      res.send(result);
+    })
 
     app.post('/users', async (req, res) => {
       let user = req.body;
